@@ -4,6 +4,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.epam.edu.classloader.CustomJarClassLoader;
 import com.epam.edu.classloader.report.Report;
 
@@ -13,6 +16,7 @@ import com.epam.edu.classloader.report.Report;
 @SuppressWarnings({"rawtypes"})
 public class Main {
 
+    private final static Logger LOG = LoggerFactory.getLogger(Main.class);
     private final static String CLASSES_PACKAGE = "com/epam/edu/classloader/report/impl/";
 
     private final static Scanner scanner = new Scanner(System.in);
@@ -81,6 +85,7 @@ public class Main {
         if (clazz != null) {
             ((Report) clazz.newInstance()).doReport();
         } else {
+            LOG.error("{} class not found!", fullClassPath);
             System.out.println(fullClassPath + " class not found!");
         }
     }
