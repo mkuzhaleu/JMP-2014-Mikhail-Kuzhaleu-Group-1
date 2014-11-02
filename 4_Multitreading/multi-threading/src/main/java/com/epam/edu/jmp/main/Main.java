@@ -1,4 +1,4 @@
-package com.epam.edu.jmp.exception;
+package com.epam.edu.jmp.main;
 
 import java.util.List;
 import java.util.Scanner;
@@ -11,7 +11,6 @@ import com.epam.edu.jmp.model.Bank;
 import com.epam.edu.jmp.model.Currency;
 import com.epam.edu.jmp.model.Customer;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 public class Main {
 	
@@ -36,8 +35,9 @@ public class Main {
             System.out.println( "5. Add new customer." );
             System.out.println( "6. Show all customers." );
             System.out.println( "7. Add bank account for user." );
+            System.out.println( "8. Transfer money." );
             
-            System.out.println( "7. Exit" );
+            System.out.println( "9. Exit" );
             option = scanner.nextInt();
 
         } while (option  != 7);
@@ -57,6 +57,9 @@ public class Main {
 		ivan.addAccount(acc1);
 		ivan.addAccount(acc2);
 		ivan.addAccount(acc3);
+		
+		customers.add(ivan);
+		banks.addAll(Lists.newArrayList(vtb, mtBank, prior));
 	}
 
 }
