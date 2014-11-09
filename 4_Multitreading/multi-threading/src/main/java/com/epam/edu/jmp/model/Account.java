@@ -1,5 +1,6 @@
 package com.epam.edu.jmp.model;
 
+
 public class Account {
 	private int bankCode;
 	private String number;
@@ -40,6 +41,11 @@ public class Account {
 
 	public void setCurrency(Currency currency) {
 		this.currency = currency;
+	}
+
+	@Override
+	public String toString() {
+		return "Account [bankCode=" + bankCode + ", number=" + number + ", currency=" + currency + ", moneyValue=" + moneyValue + "]";
 	}
 
 }

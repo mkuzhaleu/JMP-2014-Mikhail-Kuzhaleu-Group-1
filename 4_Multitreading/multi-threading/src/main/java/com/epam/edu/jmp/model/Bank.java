@@ -14,7 +14,7 @@ public class Bank {
 	private int code;
 	private String name;
 	private List<ExchangeRate> rates = Lists.newArrayList();
-	private List<Customer> customers = Lists.newArrayList();
+	private List<Account> accounts = Lists.newArrayList();
 	
 	public Bank(int code, String name) {
 		this.code = code;
@@ -37,12 +37,12 @@ public class Bank {
 		this.rates = rates;
 	}
 
-	public List<Customer> getCustomers() {
-		return customers;
+	public List<Account> getAccounts() {
+		return accounts;
 	}
 
-	public void setCustomers(List<Customer> customers) {
-		this.customers = customers;
+	public void setCustomers(List<Account> accounts) {
+		this.accounts = accounts;
 	}
 	
 	public List<ExchangeRate> addExchangeRate(ExchangeRate exchangeRate) {
@@ -52,11 +52,17 @@ public class Bank {
 	
 	public Account openNewAccount(Currency currency, double amount) {
 		Account account = new Account(code, getAccountNumber(currency), currency, amount);
+		accounts.add(account);
 		return account;
 	}
 
 	private String getAccountNumber(Currency currency) {
 		return currency.getCode() + StringUtils.leftPad(String.valueOf(accountNumber.getAndIncrement()), 10, '0');
+	}
+
+	@Override
+	public String toString() {
+		return "Bank [code=" + code + ", name=" + name + ", rates=" + rates	+ ", accounts=" + accounts + "]";
 	}
 	
 }

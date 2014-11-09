@@ -44,4 +44,9 @@ public class Customer {
 		return accounts;
 	}
 
+	@Override
+	public String toString() {
+		return "Customer [firstName=" + firstName + ", lastName=" + lastName + ", accounts=" + accounts + "]";
+	}
+
 }
