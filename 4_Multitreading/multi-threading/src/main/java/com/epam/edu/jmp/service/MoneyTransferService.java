@@ -1,31 +1,24 @@
 package com.epam.edu.jmp.service;
 
-import java.util.Random;
-
-import com.epam.edu.jmp.exception.NotEnoughMoneyToPerformMoneyTransfer;
+import com.epam.edu.jmp.exception.NotEnoughMoneyToPerformMoneyTransferException;
 import com.epam.edu.jmp.model.Account;
+import com.epam.edu.jmp.util.BankUtils;
 
 public class MoneyTransferService {
-	
-	public static void transferMoney(Account from, Account to, double amount) throws NotEnoughMoneyToPerformMoneyTransfer {
-		if (checkEnoughMoney(from, amount) ) {
-			doMoneyTransfer(from, to, amount);
-			System.out.println("Transfered " + amount + " from " + from + " to " + to);
-		}
-	}
 
-	private static synchronized void doMoneyTransfer(Account from, Account to, double amount) {
-	//private static void doMoneyTransfer(Account from, Account to, double amount) {
-		from.setMoneyValue(from.getMoneyValue() - amount);
-		to.setMoneyValue(to.getMoneyValue() + amount);	
-	}
+    public static void transferMoney(Account from, Account to, double amount)
+            throws NotEnoughMoneyToPerformMoneyTransferException {
+        if (BankUtils.checkEnoughMoney(from, amount)) {
+            doMoneyTransfer(from, to, amount);
+            System.out.println("Transfered " + amount + " from " + from
+                    + " to " + to);
+        }
+    }
 
-	private static boolean checkEnoughMoney(Account from, double amount) {
-		if (from.getMoneyValue() >= amount ) {
-			return true;
-		} else {
-			throw new NotEnoughMoneyToPerformMoneyTransfer("Can't perform money transfer of " + amount + from.getCurrency().getShortCode() + " from account " + from);
-		}
-	}
+    private static synchronized void doMoneyTransfer(Account from, Account to,
+            double amount) {
+        from.setMoneyValue(from.getMoneyValue() - amount);
+        to.setMoneyValue(to.getMoneyValue() + amount);
+    }
 
 }

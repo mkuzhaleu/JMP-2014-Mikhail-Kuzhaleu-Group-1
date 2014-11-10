@@ -1,51 +1,52 @@
 package com.epam.edu.jmp.model;
 
-
 public class Account {
-	private int bankCode;
-	private String number;
-	private Currency currency;
-	private double moneyValue;
-	
-	public Account(int bankCode, String number, Currency currency, double moneyValue) {
-		super();
-		this.bankCode = bankCode;
-		this.number = number;
-		this.currency = currency;
-		this.moneyValue = moneyValue;
-	}
+    private int bankCode;
+    private String number;
+    private Currency currency;
+    private double moneyValue;
 
-	public int getBankCode() {
-		return bankCode;
-	}
-	
-	public String getNumber() {
-		return number;
-	}
+    public Account(int bankCode, String number, Currency currency,
+            double moneyValue) {
+        super();
+        this.bankCode = bankCode;
+        this.number = number;
+        this.currency = currency;
+        this.moneyValue = moneyValue;
+    }
 
-	public void setNumber(String number) {
-		this.number = number;
-	}
+    public int getBankCode() {
+        return bankCode;
+    }
 
-	public double getMoneyValue() {
-		return moneyValue;
-	}
+    public String getNumber() {
+        return number;
+    }
 
-	public void setMoneyValue(double moneyValue) {
-		this.moneyValue = moneyValue;
-	}
+    public void setNumber(String number) {
+        this.number = number;
+    }
 
-	public Currency getCurrency() {
-		return currency;
-	}
+    public double getMoneyValue() {
+        return moneyValue;
+    }
 
-	public void setCurrency(Currency currency) {
-		this.currency = currency;
-	}
+    public void setMoneyValue(double moneyValue) {
+        this.moneyValue = moneyValue;
+    }
 
-	@Override
-	public String toString() {
-		return "Account [bankCode=" + bankCode + ", number=" + number + ", currency=" + currency + ", moneyValue=" + moneyValue + "]";
-	}
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    @Override
+    public String toString() {
+        return "Account [bankCode=" + bankCode + ", number=" + number
+                + ", currency=" + currency + ", moneyValue=" + moneyValue + "]";
+    }
 
 }

@@ -71,6 +71,15 @@
         </execution>
       </executions>
       <configuration>
+        <archive>
+          <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>com.epam.edu.jmp.main.Main</mainClass>
+          </manifest>
+          <manifestEntries>
+              <Class-Path>.</Class-Path> <!-- need to add current directory to classpath properties files can be found -->
+          </manifestEntries>
+        </archive>
         <descriptorRefs>
           <descriptorRef>jar-with-dependencies</descriptorRef>
         </descriptorRefs>
