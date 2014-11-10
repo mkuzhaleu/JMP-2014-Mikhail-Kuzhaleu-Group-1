@@ -8,6 +8,7 @@ import org.apache.log4j.PropertyConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.epam.edu.jmp.exception.CurrenciesExchangeIsNotSupportedExceprion;
 import com.epam.edu.jmp.model.Account;
 import com.epam.edu.jmp.model.Bank;
 import com.epam.edu.jmp.model.Currency;
@@ -20,7 +21,9 @@ import com.google.common.collect.Lists;
 
 public class Main {
 
-    private static final int TRANSACTIONS_NUMBER = 100;
+    private static final int RATE_PRECISION = 1_000_000;
+
+    private static final int TRANSACTIONS_NUMBER = 5;
 
     private final static Logger LOG = LoggerFactory.getLogger(Main.class);
 
@@ -103,7 +106,7 @@ public class Main {
         } while (option != 99);
     }
 
-    private static double capitalization() {
+    private static double capitalization() throws CurrenciesExchangeIsNotSupportedExceprion {
         double sum = 0;
         for (Bank bank : banks) {
             sum += BankService.capitalization(bank);
@@ -112,7 +115,6 @@ public class Main {
     }
 
     private static Thread doTransfer() {
-        System.out.println("Transfering money service");
         Account from = selectAccount();
         Account to = selectAccount();
         while (from.getNumber().equals(to.getNumber())) {
@@ -126,7 +128,6 @@ public class Main {
     }
 
     private static Thread doExchange() {
-        System.out.println("Exchanging money service");
         Bank bank = selectBank();
         Account from = selectBankAccount(bank);
         Account to = selectBankAccount(bank);
@@ -214,7 +215,7 @@ public class Main {
         for(int i = 0; i < Currency.values().length; ++i) {
             rates.add(new ExchangeRate(Currency.values()[i], Currency.values()[i], 1));
             for (int j = i + 1; j < Currency.values().length; ++j) {
-                double rate = Math.round(random.nextDouble() * 10000.) / 10000d;
+                double rate = Math.round(random.nextDouble() * RATE_PRECISION) / (double) RATE_PRECISION;
                 rates.add(new ExchangeRate(Currency.values()[i], Currency.values()[j], rate));
                 rates.add(new ExchangeRate(Currency.values()[j], Currency.values()[i], 1 / rate));
             }
