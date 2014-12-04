@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   template="/WEB-INF/templates/default.xhtml">
+   <ui:define name="content">
+      <h:form id="reg">
+         <h2>Bank Registration</h2>
+         <p>Enforces annotation-based constraints defined on the model class.</p>
+         <h:panelGrid columns="3" columnClasses="titleCell">
+            <h:outputLabel for="name" value="Name:"/>
+            <h:inputText id="name" value="#{newBank.name}"/>
+            <h:message for="name" errorClass="invalid"/>
+         </h:panelGrid>
+
+         <p>
+            <h:panelGrid columns="2">
+               <h:commandButton id="register" action="#{bankController.register}" value="Save" styleClass="register"/>
+               <h:messages styleClass="messages" errorClass="invalid" infoClass="valid" warnClass="warning"
+                           globalOnly="true"/>
+            </h:panelGrid>
+         </p>
+      </h:form>
+      <h2>Banks</h2>
+      <h:panelGroup rendered="#{empty banks}">
+         <em>No saved banks.</em>
+      </h:panelGroup>
+      <h:dataTable var="_bank" value="#{banks}" rendered="#{not empty banks}" styleClass="simpletablestyle">
+         <h:column>
+            <f:facet name="header">Bank Id</f:facet>
+                #{_bank.bankId}
+            </h:column>
+         <h:column>
+            <f:facet name="header">Name</f:facet>
+                #{_bank.name}
+            </h:column>
+         <h:column>
+            <f:facet name="header">Accounts</f:facet>
+                <a href="#{request.contextPath}/rest/banks/#{_bank.bankId}/accounts">/rest/banks/#{_bank.bankId}/accounts</a>
+            </h:column>
+         <h:column>
+            <f:facet name="header">Banks Exchange Rates</f:facet>
+                <a href="#{request.contextPath}/rest/banks/#{_bank.bankId}/rates">/rest/banks/#{_bank.bankId}/rates</a>
+            </h:column>
+         <h:column>
+            <f:facet name="header">REST URL</f:facet>
+            <a href="#{request.contextPath}/rest/banks/#{_bank.bankId}">/rest/banks/#{_bank.bankId}</a>
+         </h:column>
+         <f:facet name="footer">
+            REST URL for all banks: <a href="#{request.contextPath}/rest/banks">/rest/banks</a>
+         </f:facet>
+      </h:dataTable>
+   </ui:define>
+</ui:composition>

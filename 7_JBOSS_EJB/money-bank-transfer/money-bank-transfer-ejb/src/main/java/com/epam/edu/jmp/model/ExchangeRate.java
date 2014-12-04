@@ -24,7 +24,7 @@ public class ExchangeRate implements Serializable {
 	private int id;
 
 	@ManyToOne
-	@JoinColumn(name = "code", insertable=false, updatable=false)
+	@JoinColumn(name = "bankId", insertable=false, updatable=false)
 	private Bank bank;
 
 	@NotNull

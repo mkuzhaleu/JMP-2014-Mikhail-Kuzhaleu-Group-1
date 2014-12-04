@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -23,42 +22,30 @@ public class Account implements Serializable {
 
 	@Id
 	@GeneratedValue
-	private int id;
+	private long id;
 	
-	@ManyToOne(optional=false)
-	@JoinColumn(name = "code", insertable=false, updatable=false)
+	@NotNull 
+	@ManyToOne
+	@JoinColumn(name = "bank_Id")
 	private Bank bank;
-	
+		
 	@NotNull
 	@NotEmpty
 	private String number;
 	
 	@NotNull
-	@OneToOne
-	@JoinColumn(name = "code")
+	@ManyToOne 
+	@JoinColumn(name="FK_currency_id")
 	private Currency currency;
 	
 	@NotNull
-	@NotEmpty
 	private double moneyValue;
 
-	@ManyToOne(optional=false)
-	@JoinColumn(name = "id", insertable=false, updatable=false)
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name = "FK_customer_id")
 	private Customer customer;
-	
-	/**
-	 * @return the code
-	 */
-	public int getCode() {
-		return id;
-	}
 
-	/**
-	 * @param code the code to set
-	 */
-	public void setCode(int id) {
-		this.id = id;
-	}
 
 	/**
 	 * @return the bank
@@ -119,14 +106,14 @@ public class Account implements Serializable {
 	/**
 	 * @return the id
 	 */
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -143,14 +130,59 @@ public class Account implements Serializable {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-	
-//	public Account(int bankCode, String number, Currency currency, double moneyValue) {
-//		super();
-//		this.bankCode = bankCode;
-//		this.number = number;
-//		this.currency = currency;
-//		this.moneyValue = moneyValue;
-//	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((bank == null) ? 0 : bank.hashCode());
+		result = prime * result
+				+ ((currency == null) ? 0 : currency.hashCode());
+		result = prime * result
+				+ ((customer == null) ? 0 : customer.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((number == null) ? 0 : number.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Account other = (Account) obj;
+		if (bank == null) {
+			if (other.bank != null)
+				return false;
+		} else if (!bank.equals(other.bank))
+			return false;
+		if (currency == null) {
+			if (other.currency != null)
+				return false;
+		} else if (!currency.equals(other.currency))
+			return false;
+		if (customer == null) {
+			if (other.customer != null)
+				return false;
+		} else if (!customer.equals(other.customer))
+			return false;
+		if (id != other.id)
+			return false;
+		if (number == null) {
+			if (other.number != null)
+				return false;
+		} else if (!number.equals(other.number))
+			return false;
+		return true;
+	}
 
 }

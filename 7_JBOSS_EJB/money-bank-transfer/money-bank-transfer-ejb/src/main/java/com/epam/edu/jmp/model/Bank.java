@@ -1,7 +1,6 @@
 package com.epam.edu.jmp.model;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -22,39 +21,21 @@ import com.google.common.collect.Sets;
 @Table(name = "Bank")
 public class Bank implements Serializable {
 
-	// private static AtomicInteger accountNumber = new AtomicInteger(0);
-
 	private static final long serialVersionUID = 7160413125275449987L;
 	
 	@Id
 	@GeneratedValue
-	private int code;
+	private long bankId;
 
 	@NotNull
 	@NotEmpty
 	private String name;
 
 	@OneToMany(mappedBy = "bank", fetch = FetchType.EAGER)
-	//@Fetch(value = FetchMode.SUBSELECT)
 	private Set<ExchangeRate> rates = Sets.newLinkedHashSet();
 
 	@OneToMany(mappedBy = "bank", fetch = FetchType.EAGER)
-	//@Fetch(value = FetchMode.SUBSELECT)
 	private Set<Account> accounts = Sets.newLinkedHashSet();
-
-	/**
-	 * @return the code
-	 */
-	public int getCode() {
-		return code;
-	}
-
-	/**
-	 * @param code the code to set
-	 */
-	public void setCode(int code) {
-		this.code = code;
-	}
 
 	/**
 	 * @return the name
@@ -98,33 +79,52 @@ public class Bank implements Serializable {
 		this.accounts = accounts;
 	}
 
-	// public Bank(int code, String name) {
-	// this.code = code;
-	// this.name = name;
-	// }
+	/**
+	 * @return the bankId
+	 */
+	public long getBankId() {
+		return bankId;
+	}
 
-	// public List<ExchangeRate> addExchangeRate(ExchangeRate exchangeRate) {
-	// getRates().add(exchangeRate);
-	// return rates;
-	// }
-	//
-	// public Account openNewAccount(Currency currency, double amount) {
-	// Account account = new Account(code, getAccountNumber(currency), currency,
-	// amount);
-	// accounts.add(account);
-	// return account;
-	// }
-	//
-	// private String getAccountNumber(Currency currency) {
-	// return currency.getCode() +
-	// StringUtils.leftPad(String.valueOf(accountNumber.getAndIncrement()), 10,
-	// '0');
-	// }
-	//
-	// @Override
-	// public String toString() {
-	// return "Bank [code=" + code + ", name=" + name + ", rates=" + rates +
-	// ", accounts=" + accounts + "]";
-	// }
+	/**
+	 * @param bankId the bankId to set
+	 */
+	public void setBankId(long bankId) {
+		this.bankId = bankId;
+	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (int) (bankId ^ (bankId >>> 32));
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Bank other = (Bank) obj;
+		if (bankId != other.bankId)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		return true;
+	}
+	
 }

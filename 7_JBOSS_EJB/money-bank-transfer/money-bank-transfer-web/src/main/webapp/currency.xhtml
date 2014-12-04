@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   template="/WEB-INF/templates/default.xhtml">
+   <ui:define name="content">
+      <h:form id="reg">
+         <h2>Currency Registration</h2>
+         <p>Enforces annotation-based constraints defined on the model class.</p>
+         <h:panelGrid columns="3" columnClasses="titleCell">
+            <h:outputLabel for="code" value="Code:"/>
+            <h:inputText id="code" value="#{newCurrency.code}" />
+            <h:message for="code" errorClass="invalid"/>
+
+            <h:outputLabel for="name" value="Name:"/>
+            <h:inputText id="name" value="#{newCurrency.name}"/>
+            <h:message for="name" errorClass="invalid"/>
+            
+            <h:outputLabel for="shortCode" value="Short Code:"/>
+            <h:inputText id="shortCode" value="#{newCurrency.shortCode}"/>
+            <h:message for="shortCode" errorClass="invalid"/>
+         </h:panelGrid>
+
+         <p>
+            <h:panelGrid columns="2">
+               <h:commandButton id="register" action="#{currencyController.register}" value="Save" styleClass="register"/>
+               <h:messages styleClass="messages" errorClass="invalid" infoClass="valid" warnClass="warning"
+                           globalOnly="true"/>
+            </h:panelGrid>
+         </p>
+      </h:form>
+      <h2>Currencies</h2>
+      <h:panelGroup rendered="#{empty currencies}">
+         <em>No saved currencies.</em>
+      </h:panelGroup>
+      <h:dataTable var="_currency" value="#{currencies}" rendered="#{not empty currencies}" styleClass="simpletablestyle">
+         <h:column>
+            <f:facet name="header">Id</f:facet>
+                #{_currency.currencyId}
+            </h:column>
+         <h:column>
+            <f:facet name="header">Name</f:facet>
+                #{_currency.name}
+            </h:column>
+         <h:column>
+            <f:facet name="header">Code</f:facet>
+                #{_currency.code}
+            </h:column>
+         <h:column>
+            <f:facet name="header">Shord Code</f:facet>
+                #{_currency.shortCode}
+            </h:column>
+         <h:column>
+            <f:facet name="header">REST URL</f:facet>
+            <a href="#{request.contextPath}/rest/currencies/#{_currency.currencyId}">/rest/currencies/#{_currency.currencyId}</a>
+         </h:column>
+         <f:facet name="footer">
+            REST URL for all currencies: <a href="#{request.contextPath}/rest/currencies">/rest/currencies</a>
+         </f:facet>
+      </h:dataTable>
+   </ui:define>
+</ui:composition>

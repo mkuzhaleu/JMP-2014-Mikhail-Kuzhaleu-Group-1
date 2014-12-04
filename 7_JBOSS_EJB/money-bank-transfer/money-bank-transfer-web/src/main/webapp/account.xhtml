@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:ui="http://java.sun.com/jsf/facelets"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:h="http://java.sun.com/jsf/html"
+   template="/WEB-INF/templates/default.xhtml">
+   <ui:define name="content">
+      <h:form id="reg">
+         <h2>Customer Registration</h2>
+         <p>Enforces annotation-based constraints defined on the model class.</p>
+         <h:panelGrid columns="3" columnClasses="titleCell">
+            <h:outputLabel for="number" value="Account Number:"/>
+            <h:inputText id="number" value="#{newAccount.number}" />
+            <h:message for="number" errorClass="invalid"/>
+
+            <h:outputLabel for="moneyValue" value="Amount:"/>
+            <h:inputText id="moneyValue" value="#{newAccount.moneyValue}"/>
+            <h:message for="moneyValue" errorClass="invalid"/>
+            
+            <h:outputLabel for="currency" value="Currency:" />
+            <h:selectOneMenu id="currency"  value="#{newAccount.currency}" converter="#{currencyConverter}" >
+                   <f:selectItems value="#{currencies}" var="currency" itemLabel="#{currency.name}" itemValue="#{currency}"/>
+            </h:selectOneMenu>
+            <h:message for="currency" errorClass="invalid" />
+
+            <h:outputLabel for="bank" value="Bank:" />
+              <h:selectOneMenu id="bank" value="#{newAccount.bank}" converter="#{bankConverter}" >
+                   <f:selectItems value="#{banks}" var="bank" itemLabel="#{bank.name}" itemValue="#{bank}"/>
+              </h:selectOneMenu>
+            <h:message for="bank" errorClass="invalid" />
+            
+            <h:outputLabel for="customer" value="Customer:" />
+              <h:selectOneMenu id="customer" value="#{newAccount.customer}" converter="#{customerConverter}" >
+                   <f:selectItems value="#{customers}" var="customer" itemLabel="#{customer.firstName} #{customer.lastName}" itemValue="#{customer}"/>
+              </h:selectOneMenu>
+            <h:message for="customer" errorClass="invalid" />
+            
+         </h:panelGrid>
+
+         <p>
+            <h:panelGrid columns="2">
+               <h:commandButton id="register" action="#{accountController.register}" value="Create" styleClass="register"/>
+               <h:messages styleClass="messages" errorClass="invalid" infoClass="valid" warnClass="warning"
+                           globalOnly="true"/>
+            </h:panelGrid>
+         </p>
+      </h:form>
+      <h2>Customers</h2>
+      <h:panelGroup rendered="#{empty accounts}">
+         <em>No saved accounts.</em>
+      </h:panelGroup>
+      <h:dataTable var="_account" value="#{accounts}" rendered="#{not empty accounts}" styleClass="simpletablestyle">
+         <h:column>
+            <f:facet name="header">Id</f:facet>
+                #{_account.id}
+            </h:column>
+         <h:column>
+            <f:facet name="header">Bank Name</f:facet>
+                #{_account.bank.name}
+            </h:column>
+         <h:column>
+            <f:facet name="header">Currency</f:facet>
+                #{_account.currency.name}
+            </h:column>
+         <h:column>
+            <f:facet name="header">Account Number</f:facet>
+                #{_account.number}
+            </h:column>
+         <h:column>
+            <f:facet name="header">Amount</f:facet>
+                #{_account.moneyValue}
+            </h:column>
+         <h:column>
+            <f:facet name="header">Customer Name</f:facet>
+                #{_account.customer.firstName} #{_account.customer.lastName}
+            </h:column>
+         <h:column>
+            <f:facet name="header">REST URL</f:facet>
+            <a href="#{request.contextPath}/rest/accounts/#{_account.id}">/rest/accounts/#{_account.id}</a>
+         </h:column>
+         <f:facet name="footer">
+            REST URL for all accounts: <a href="#{request.contextPath}/rest/accounts">/rest/accounts</a>
+         </f:facet>
+      </h:dataTable>
+   </ui:define>
+</ui:composition>

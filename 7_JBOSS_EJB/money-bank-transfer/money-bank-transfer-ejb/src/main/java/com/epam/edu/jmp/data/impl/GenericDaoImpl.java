@@ -13,7 +13,7 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
 
   private final Class<T> persistentClass;
   private final EntityManager em;
-
+  
   public GenericDaoImpl() {
     this(null);
   }
@@ -27,7 +27,7 @@ public class GenericDaoImpl<T> implements GenericDao<T> {
 
   @Override
   public void save(T object) {
-    em.merge(object);
+    em.persist(object);
   }
 
   @Override
