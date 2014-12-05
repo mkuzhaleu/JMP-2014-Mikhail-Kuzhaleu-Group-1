@@ -8,7 +8,7 @@ import javax.ejb.TransactionManagementType;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import com.epam.edu.jmp.exception.NotEnoughMoneyToPerformMoneyTransfer;
+import com.epam.edu.jmp.exception.NotEnoughMoneyToPerformMoneyTransferException;
 import com.epam.edu.jmp.model.Account;
 
 @Stateless
@@ -19,7 +19,7 @@ public class MoneyTransferService {
 	private EntityManager em;
 	
 	@TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-	public void transferMoney(Account from, Account to, double amount) throws NotEnoughMoneyToPerformMoneyTransfer {
+	public void transferMoney(Account from, Account to, double amount) throws NotEnoughMoneyToPerformMoneyTransferException {
 		if (checkEnoughMoney(from, amount) ) {
 			doMoneyTransfer(from, to, amount);
 			System.out.println("Transfered " + amount + " from " + from + " to " + to);
@@ -37,7 +37,7 @@ public class MoneyTransferService {
 		if (from.getMoneyValue() >= amount ) {
 			return true;
 		} else {
-			throw new NotEnoughMoneyToPerformMoneyTransfer("Can't perform money transfer of " + amount + from.getCurrency().getShortCode() + " from account " + from);
+			throw new NotEnoughMoneyToPerformMoneyTransferException("Can't perform money transfer of " + amount + from.getCurrency().getShortCode() + " from account " + from);
 		}
 	}
 

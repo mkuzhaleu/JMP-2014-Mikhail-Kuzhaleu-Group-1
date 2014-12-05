@@ -11,20 +11,20 @@
          <h:panelGrid columns="3" columnClasses="titleCell">
             <h:outputLabel for="from" value="From Account:" />
               <h:selectOneMenu id="from"  value="#{newTransfer.from}" converter="#{accountConverter}" >
-                   <f:selectItems value="#{accounts}" var="from" itemLabel="#{from.number} | #{from.bank.name}" itemValue="#{from}"/>
+                   <f:selectItems value="#{accounts}" var="from" itemLabel="#{from.number} | #{from.bank.name} | #{from.currency.name}" itemValue="#{from}"/>
               </h:selectOneMenu>
             <h:message for="from" errorClass="invalid" />
 
             <h:outputLabel for="to" value="To Account:" />
               <h:selectOneMenu id="to" value="#{newTransfer.to}" converter="#{accountConverter}" >
-                   <f:selectItems value="#{accounts}" var="to" itemLabel="#{to.number} | #{to.bank.name}" itemValue="#{to}"/>
+                   <f:selectItems value="#{accounts}" var="to" itemLabel="#{to.number} | #{to.bank.name} | #{to.currency.name}" itemValue="#{to}"/>
               </h:selectOneMenu>
             <h:message for="to" errorClass="invalid" />
-            
+
             <h:outputLabel for="amount" value="Amount to transfer:"/>
               <h:inputText id="amount" value="#{newTransfer.amount}" />
             <h:message for="amount" errorClass="invalid"/>
-            
+
          </h:panelGrid>
 
          <p>

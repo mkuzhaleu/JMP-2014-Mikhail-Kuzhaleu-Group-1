@@ -3,6 +3,7 @@ package com.epam.edu.jmp.model;
 import java.io.Serializable;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ import com.google.common.collect.Sets;
 public class Bank implements Serializable {
 
 	private static final long serialVersionUID = 7160413125275449987L;
-	
+
 	@Id
 	@GeneratedValue
 	private long bankId;
@@ -31,10 +32,10 @@ public class Bank implements Serializable {
 	@NotEmpty
 	private String name;
 
-	@OneToMany(mappedBy = "bank", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "bank", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<ExchangeRate> rates = Sets.newLinkedHashSet();
 
-	@OneToMany(mappedBy = "bank", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "bank", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<Account> accounts = Sets.newLinkedHashSet();
 
 	/**
@@ -126,5 +127,5 @@ public class Bank implements Serializable {
 			return false;
 		return true;
 	}
-	
+
 }
