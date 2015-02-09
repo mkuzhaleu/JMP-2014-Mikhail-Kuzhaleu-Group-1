@@ -19,6 +19,8 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet implementation class ServletMessageProducer
+ * See here http://localhost:8080/JmsWebProject/ServletMessageProducer message sent.
+ * Check JBoss logs that message is recieved.
  */
 @WebServlet("/ServletMessageProducer")
 public class ServletMessageProducer extends HttpServlet {
