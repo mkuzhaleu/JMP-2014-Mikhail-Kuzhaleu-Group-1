@@ -24,27 +24,21 @@ public class ExchangeRate implements Serializable {
 	private int id;
 
 	@ManyToOne
-	@JoinColumn(name = "bankId", insertable=false, updatable=false)
+	@JoinColumn(name = "bankId") //, insertable=false, updatable=false
 	private Bank bank;
 
 	@NotNull
-	@OneToOne
-	@JoinColumn(name = "id")
+	@ManyToOne
+	@JoinColumn(name="FK_currency_id_from")
 	private Currency from;
 
 	@NotNull
-	@OneToOne
-	@JoinColumn(name = "id")
+	@ManyToOne
+	@JoinColumn(name="FK_currency_id_to")
 	private Currency to;
 
 	@NotNull
 	private double rate;
-
-	// public ExchangeRate(Currency from, Currency to, double rate) {
-	// this.from = from;
-	// this.to = to;
-	// this.rate = rate;
-	// }
 
 	public Currency getFrom() {
 		return from;
